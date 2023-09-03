@@ -5,7 +5,11 @@ const cors = require('koa2-cors')
 const path = require('path')
 const router = require("./router/index")
 const JWT = require("./util/JWT")
+const log4js = require("./libs/logger")
 const app = new Koa()
+
+// ctx.log
+app.context.log = log4js.getLogger("outAndDateFile")
 
 // 配置跨域
 // app.use(cors())

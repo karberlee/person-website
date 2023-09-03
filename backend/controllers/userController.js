@@ -10,11 +10,11 @@ exports.listUser = async (ctx) => {
     let sql = "select * from user where user.status = $1"
     let res = await pg.query(ctx, sql, sqlParams)
     assert(res.code == 0, `get user list error: ${res.msg}`)
-    ctx.body = { data: res.data }
+    ctx.body = { status: "success", data: res.data }
   } catch (error) {
-    console.log("error:", error)
+    ctx.log.error("error:", error)
     ctx.status = 500
-    ctx.body = { error }
+    ctx.body = { status: "fail", message: error.message }
   }
 }
 
@@ -25,10 +25,10 @@ exports.addUsers = async (ctx) => {
     let sqlFormat = format("insert into user (username, password, status) values %L", params.users)
     let res = await pg.query(ctx, sqlFormat, [])
     assert(res.code == 0, `add users error: ${res.msg}`)
-    ctx.body = { data: res.data }
+    ctx.body = { status: "success", data: res.data }
   } catch (error) {
-    console.log("error:", error)
+    ctx.log.error("error:", error)
     ctx.status = 500
-    ctx.body = { error }
+    ctx.body = { status: "fail", message: error.message }
   }
 }

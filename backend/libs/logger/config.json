@@ -1,0 +1,36 @@
+{
+  "appenders": {
+    "out": {
+      "type": "stdout",
+      "layout": {
+        "type": "colored"
+      }
+    },
+    "err": {
+      "type": "stderr",
+      "layout": {
+        "type": "colored"
+      }
+    },
+    "writeToFile": {
+      "type": "file",
+      "filename": "./logs/log.log"
+    },
+    "writeToDateFile": {
+      "type": "datefile",
+      "filename": "./logs/log",
+      "pattern": "yyyy-MM-dd.log",
+      "alwaysIncludePattern": true
+    }
+  },
+  "categories": {
+    "default": {
+      "appenders": ["out"],
+      "level": "INFO"
+    },
+    "outAndDateFile": {
+      "appenders": ["out", "writeToDateFile"],
+      "level": "INFO"
+    }
+  }
+}

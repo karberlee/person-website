@@ -12,13 +12,14 @@ exports.login = async (ctx) => {
       ctx.set("Authorization", token)
       ctx.body = { status: "success" }
     } else {
+      ctx.log.error("error:", `Invalid username:${params.username} or password:${params.password}`, )
       ctx.status = 401
       ctx.body = { status: "fail", message: "Invalid username or password" }
     }
   } catch (error) {
-    console.log("error:", error)
+    ctx.log.error("error:", error)
     ctx.status = 500
-    ctx.body = { error }
+    ctx.body = { status: "fail", message: error.message }
   }
 }
 
