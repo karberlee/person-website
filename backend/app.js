@@ -3,10 +3,14 @@ const static = require('koa-static')
 const bodyParser = require('koa-bodyparser')
 const cors = require('koa2-cors')
 const path = require('path')
+require("dotenv").config()  // 使用dotenv让node可以读取环境变量
 const router = require("./router/index")
 const JWT = require("./util/JWT")
 const log4js = require("./libs/logger")
 const app = new Koa()
+
+const port = process.env.PORT || 3000
+const url_prefix = process.env.URL_PREFIX || "/api"
 
 // ctx.log
 app.context.log = log4js.getLogger("outAndDateFile")
@@ -62,7 +66,7 @@ app.use(async (ctx, next) => {
 })
 
 // 设置路由前缀
-router.prefix('/api')
+router.prefix(url_prefix)
 
 // allowedMethods 以其它方式请求报405，不加会报404
 app.use(router.routes()).use(router.allowedMethods())
@@ -73,7 +77,7 @@ app.use(async (ctx) => {
   ctx.body = require("fs").createReadStream(path.join(__dirname, "public", "index.html"))
 })
 
-app.listen(3000)
+app.listen(port)
   .on('listening', () => {
-    console.log(`Listening on port: 3000`);
+    console.log(`Listening on port: ${port}`);
   });

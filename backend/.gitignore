@@ -4,3 +4,4 @@ package-lock.json
 public
 logs
 private_tools
+.env
