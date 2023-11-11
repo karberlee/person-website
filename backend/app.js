@@ -6,6 +6,7 @@ const path = require('path')
 require("dotenv").config()  // 使用dotenv让node可以读取环境变量
 const router = require("./router/index")
 const JWT = require("./util/JWT")
+const SendGrid = require("./util/SendGrid")
 const log4js = require("./libs/logger")
 const app = new Koa()
 
@@ -79,5 +80,14 @@ app.use(async (ctx) => {
 
 app.listen(port)
   .on('listening', () => {
-    console.log(`Listening on port: ${port}`);
+    console.log(`Listening on port: ${port}, prefix: ${url_prefix}`);
+    SendGrid.sendEmail(
+      "hello_developer@foxmail.com",
+      "Website deployed",
+      undefined,
+      `
+        <div>Your website deployed successful.</div>
+        <div style="color: red;">System message.</div>
+      `,
+    )
   });
