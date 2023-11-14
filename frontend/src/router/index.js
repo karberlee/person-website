@@ -29,4 +29,18 @@ const router = createRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem("token");
+  if (to.path === '/login' && token) {
+    // 如果用户已登录且尝试访问登录页面，重定向到首页
+    next('/');
+  } else if (to.path !== '/login' && !token) {
+    // 如果用户未登录且尝试访问其他页面，重定向到登录页面
+    next('/login');
+  } else {
+    // 其他情况正常导航
+    next();
+  }
+});
+
 export default router

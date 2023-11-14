@@ -31,13 +31,13 @@ http.interceptors.response.use(
     return response;
   }, 
   function (error) {
-    console.log(error)
+    console.log("api response error:", error)
     const { status } = error.response
-    if(status === 401) {
+    if(status === 401 && !window.location.href.endsWith("/login")) {
       localStorage.removeItem("token")
       window.location.href = "/login"
     }
-    return Promise.reject(error);
+    return Promise.reject(error.response);
   }
 );
 

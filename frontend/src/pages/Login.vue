@@ -7,7 +7,6 @@
       <div class="sub_title">Password:</div>
       <input class="form_input" type="password" placeholder="Password" v-model="userInfo.password"/><br>
       <div class="button" @click="login">Login</div>
-  
     </div>
   </div>
 </template>
@@ -26,6 +25,16 @@ export default {
     const methods = {
       login() {
         this.$post("/login", userInfo)
+        .then(res => {
+          this.$router.push("/")
+        })
+        .catch(error => {
+          this.$message({
+            showClose: true,
+            message: error?.data?.message,
+            type: "error",
+          })
+        })
       },
     }
 
