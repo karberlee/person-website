@@ -62,7 +62,9 @@ app.use(async (ctx, next) => {
       ctx.body = { errCode: -1, errInfo: "token exprires" } 
     }
   } else {
-    await next()
+    // await next()
+    ctx.status = 401
+    ctx.body = { errCode: -1, errInfo: "loggin please" }
   }
 })
 
@@ -81,13 +83,13 @@ app.use(async (ctx) => {
 app.listen(port)
   .on('listening', () => {
     console.log(`Listening on port: ${port}, prefix: ${url_prefix}`);
-    SendGrid.sendEmail(
-      "hello_developer@foxmail.com",
-      "Website deployed",
-      undefined,
-      `
-        <div>Your website deployed successful.</div>
-        <div style="color: red;">System message.</div>
-      `,
-    )
+    // SendGrid.sendEmail(
+    //   "hello_developer@foxmail.com",
+    //   "Website deployed",
+    //   undefined,
+    //   `
+    //     <div>Your website deployed successful.</div>
+    //     <div style="color: red;">System message.</div>
+    //   `,
+    // )
   });

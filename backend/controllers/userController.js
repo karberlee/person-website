@@ -22,7 +22,7 @@ exports.addUsers = async (ctx) => {
   const params = { ...ctx.params, ...ctx.request.body }
   try {
     assert(params.users && params.users.length > 0, "Invalid parameter 'users'")
-    let sqlFormat = format("insert into user (username, password, status) values %L", params.users)
+    let sqlFormat = format("insert into user (email, password, status) values %L", params.users)
     let res = await pg.query(ctx, sqlFormat, [])
     assert(res.code == 0, `add users error: ${res.msg}`)
     ctx.body = { status: "success", data: res.data }

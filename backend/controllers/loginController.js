@@ -4,17 +4,17 @@ const JWT = require("../util/JWT")
 exports.login = async (ctx) => {
   const params = { ...ctx.params, ...ctx.request.body }
   try {
-    assert(params.username, "Invalid parameter 'username'")
+    assert(params.email, "Invalid parameter 'email'")
     assert(params.password, "Invalid parameter 'password'")
-    let userInfo = userDataList.find(item => item.username == params.username && item.password == params.password)
+    let userInfo = userDataList.find(item => item.email == params.email && item.password == params.password)
     if (userInfo) {
-      const token = JWT.generate({ id: userInfo.id, username: userInfo.username }, "1d")
+      const token = JWT.generate({ id: userInfo.id, email: userInfo.email }, "1d")
       ctx.set("Authorization", token)
       ctx.body = { status: "success" }
     } else {
-      ctx.log.error("error:", `Invalid username:${params.username} or password:${params.password}`, )
+      ctx.log.error("error:", `Invalid email:${params.email} or password:${params.password}`, )
       ctx.status = 401
-      ctx.body = { status: "fail", message: "Invalid username or password" }
+      ctx.body = { status: "fail", message: "Invalid email or password" }
     }
   } catch (error) {
     ctx.log.error("error:", error)
@@ -24,8 +24,8 @@ exports.login = async (ctx) => {
 }
 
 const userDataList = [
-  { id: 0 , username: "admin", password: "password" },
-  { id: 1 , username: "Karber", password: "123456" },
-  { id: 2 , username: "Rex", password: "888888" },
-  { id: 3 , username: "Kiwi", password: "666666" },
+  { id: 0 , email: "admin@foxmail.com", password: "password" },
+  { id: 1 , email: "karber@foxmail.com", password: "123456" },
+  { id: 2 , email: "rex@abc.com", password: "888888" },
+  { id: 3 , email: "kiwi@abc.com", password: "666666" },
 ]
