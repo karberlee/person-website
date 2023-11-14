@@ -64,7 +64,7 @@ app.use(async (ctx, next) => {
   } else {
     // await next()
     ctx.status = 401
-    ctx.body = { errCode: -1, errInfo: "loggin please" }
+    ctx.body = { errCode: -1, errInfo: "login please" }
   }
 })
 
