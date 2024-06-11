@@ -10,6 +10,9 @@ const SendGrid = require("./util/SendGrid")
 const log4js = require("./libs/logger")
 const app = new Koa()
 
+const easyMonitor = require('easy-monitor');
+easyMonitor('Person Website')
+
 const port = process.env.PORT || 3000
 const url_prefix = process.env.URL_PREFIX || "/api"
 
